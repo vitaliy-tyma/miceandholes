@@ -1,0 +1,12 @@
+Jan 21, 2020 3:25:17 PM com.sjd.Main main
+INFO: ************************* Mice and holes task STARTED **********************
+Jan 21, 2020 3:25:17 PM com.sjd.task.TaskSolver startTaskSolving
+INFO: *********************** SOLVER WORKS ******************
+Jan 21, 2020 3:25:17 PM com.sjd.task.TaskSolver startTaskSolving
+INFO: All tasks = [Task{Mice=[0, 2, 3], Holes=[5, 6, 7]}, Task{Mice=[11, 2, 34], Holes=[-5, 65, 78]}]
+Jan 21, 2020 3:25:17 PM com.sjd.task.TaskSolver solveTask
+INFO: Task = Task{Mice=[0, 2, 3], Holes=[5, 6, 7]}
+Jan 21, 2020 3:25:17 PM com.sjd.task.TaskSolver solveTask
+INFO: Task = Task{Mice=[11, 2, 34], Holes=[-5, 65, 78]}
+Jan 21, 2020 3:25:17 PM com.sjd.Main main
+INFO: ************************* Mice and holes task STOPPED **********************
