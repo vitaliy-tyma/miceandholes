@@ -25,7 +25,7 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
     }
 
     private void solveTask(Task task) {
-        logger.info("Task = " + task.toString());
+        logger.info("*************************************************************** " + task.toString());
 
         NavigableMap<Integer, Boolean> holesMap = new TreeMap<>();
         for (Integer hole : task.getHoles()){
@@ -34,33 +34,73 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
 
         Map<Integer, Integer> miceMap = new LinkedHashMap<>();
         for (Integer mouse : task.getMice()){
-            holesMap.put(mouse, null);
+            miceMap.put(mouse, null);
         }
 
 
         for (Integer currentMouse : miceMap.keySet())
         {
+            Integer diffToCeiling = null;
+            Integer diffToFloor = null;
+
+            Boolean isCeilingExists = Boolean.FALSE;
+            Boolean isFloorExists = Boolean.FALSE;
+
+            Boolean takeCeiling = Boolean.FALSE;
+            Boolean takeFloor = Boolean.FALSE;
+            Boolean noSolution = Boolean.FALSE;
+
+
             Integer ceilingKey = holesMap.ceilingKey(currentMouse); // greater or equal
             if (ceilingKey != null) {
-                Integer diffToCeiling = ceilingKey - currentMouse;
+                diffToCeiling = ceilingKey - currentMouse;
+                isCeilingExists = Boolean.TRUE;
             }
 
             Integer floorKey = holesMap.floorKey(currentMouse); //less or equal
             if (floorKey != null) {
-                Integer diffToFloor = currentMouse - floorKey;
+                diffToFloor = currentMouse - floorKey;
+                isFloorExists = Boolean.TRUE;
             }
 
-            if (diff <= 0) {
-                //select lower
-
-            } else {
+            if (isCeilingExists & isFloorExists) {
+                  if (diffToCeiling < diffToFloor){
+                      //select lower
+                      takeCeiling = Boolean.FALSE;
+                      takeFloor = Boolean.TRUE;
+                  } else {
+                      //select higher
+                      takeCeiling = Boolean.TRUE;
+                      takeFloor = Boolean.FALSE;
+                 }
+            } else if (isCeilingExists) {
                 //select higher
-
+                takeCeiling = Boolean.TRUE;
+                takeFloor = Boolean.FALSE;
+            } else if (isFloorExists) {
+                //select lower
+                takeCeiling = Boolean.FALSE;
+                takeFloor = Boolean.TRUE;
+            } else {
+                noSolution = Boolean.TRUE;
             }
 
+            if (!noSolution & takeCeiling) {
+                miceMap.put(currentMouse, ceilingKey);
+                holesMap.remove(ceilingKey);
+            } else if (!noSolution & takeFloor) {
+                miceMap.put(currentMouse, floorKey);
+                holesMap.remove(floorKey);
+            } else if (noSolution) {
+                miceMap.put(currentMouse, null);
+            }
 
+//            logger.info("Results for mouse: " + currentMouse);
         }
 
-        //TODO print results to the log
+        //Print results to the log
+        logger.info("********************************************************* Results for MiceMap = " + miceMap.toString());
+
+        //TODO - Make analysis of the results...
     }
 }
