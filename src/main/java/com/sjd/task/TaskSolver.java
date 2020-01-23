@@ -3,10 +3,12 @@ package com.sjd.task;
 import com.sjd.model.Task;
 import com.sjd.util.FileReaderClass;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class TaskSolver {
 private final static Logger logger = Logger.getLogger(TaskSolver.class.getName());
