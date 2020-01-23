@@ -11,7 +11,7 @@ public class SolutionChecker {
         List<Integer> result = new ArrayList<>(miceMap.size());
 
         for (Map.Entry<Integer, Integer> e : miceMap.entrySet()){
-            result.add(Math.abs(e.getKey()-e.getValue()));
+            result.add(e.getValue() - e.getKey());
         }
 
         return result;

@@ -65,14 +65,14 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
 
             if (isCeilingExists & isFloorExists) {
                   if (diffToCeiling < diffToFloor){
-                      //select lower
-                      takeCeiling = Boolean.FALSE;
-                      takeFloor = Boolean.TRUE;
-                  } else {
                       //select higher
                       takeCeiling = Boolean.TRUE;
                       takeFloor = Boolean.FALSE;
-                 }
+                  } else {
+                      //select lower
+                      takeCeiling = Boolean.FALSE;
+                      takeFloor = Boolean.TRUE;
+                  }
             } else if (isCeilingExists) {
                 //select higher
                 takeCeiling = Boolean.TRUE;
@@ -103,8 +103,16 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
 
         //Analysis of the results
         List<Integer> effectivityList = new SolutionChecker().check(miceMap);
-        logger.info("Effectivity check: " + effectivityList.toString());
-//        logger.info("Effectivity sum: " + effectivityList.stream().map(e -> e.intValue()));
+        logger.info(
+                "************************************************ Effectivity sum: [ "
+                + effectivityList.stream()
+                .mapToInt(Integer::intValue)
+                //.(e -> Math.abs())
+                .map(Math::abs)
+                .sum()
+                + " ] **************************** Steps list: "
+                + effectivityList.toString());
+        logger.info("");
 
     }
 }
