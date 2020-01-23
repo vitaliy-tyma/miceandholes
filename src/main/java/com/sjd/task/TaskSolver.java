@@ -101,6 +101,10 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
         //Print results to the log
         logger.info("********************************************************* Results for MiceMap = " + miceMap.toString());
 
-        //TODO - Make analysis of the results...
+        //Analysis of the results
+        List<Integer> effectivityList = new SolutionChecker().check(miceMap);
+        logger.info("Effectivity check: " + effectivityList.toString());
+//        logger.info("Effectivity sum: " + effectivityList.stream().map(e -> e.intValue()));
+
     }
 }
