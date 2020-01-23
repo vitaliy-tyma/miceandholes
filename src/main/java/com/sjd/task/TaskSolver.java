@@ -4,7 +4,9 @@ import com.sjd.model.Task;
 import com.sjd.util.FileReaderClass;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class TaskSolver {
 private final static Logger logger = Logger.getLogger(TaskSolver.class.getName());
@@ -28,15 +30,10 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
         logger.info("*************************************************************** " + task.toString());
 
         NavigableMap<Integer, Boolean> holesMap = new TreeMap<>();
-        for (Integer hole : task.getHoles()){
-            holesMap.put(hole, Boolean.FALSE);
-        }
+        task.getHoles().forEach(hole -> holesMap.put(hole, Boolean.FALSE));
 
         Map<Integer, Integer> miceMap = new LinkedHashMap<>();
-        for (Integer mouse : task.getMice()){
-            miceMap.put(mouse, null);
-        }
-
+        task.getMice().forEach(mouse -> miceMap.put(mouse, null));
 
         for (Integer currentMouse : miceMap.keySet())
         {
@@ -93,26 +90,20 @@ private final static Logger logger = Logger.getLogger(TaskSolver.class.getName()
                 holesMap.remove(floorKey);
             } else if (noSolution) {
                 miceMap.put(currentMouse, null);
+                logger.info("XXXXXXXXXXXXXXXXXXXXXXXXX NO SOLUTION XXXXXXXXXXXXXXXXXXXX");
             }
-
-//            logger.info("Results for mouse: " + currentMouse);
         }
 
-        //Print results to the log
         logger.info("********************************************************* Results for MiceMap = " + miceMap.toString());
 
         //Analysis of the results
         List<Integer> effectivityList = new SolutionChecker().check(miceMap);
         logger.info(
                 "************************************************ Effectivity sum: [ "
-                + effectivityList.stream()
-                .mapToInt(Integer::intValue)
-                //.(e -> Math.abs())
-                .map(Math::abs)
-                .sum()
-                + " ] **************************** Steps list: "
+                + effectivityList.stream().mapToInt(Integer::intValue).map(Math::abs).sum()
+                + " ] "
+                + "**************************** Steps list: "
                 + effectivityList.toString());
         logger.info("");
-
     }
 }
